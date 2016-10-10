@@ -146,6 +146,63 @@ namespace SampleWebAPI1.DAL
                 }
             }
         }
+
+        public void Update(Mahasiswa mhs)
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string strSql = @"update Mahasiswa set Nama=@Nama,Email=@Email,IPK=@IPK 
+                                  where Nim=@Nim";
+
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@Nim", mhs.Nim);
+                cmd.Parameters.AddWithValue("@Nama", mhs.Nama);
+                cmd.Parameters.AddWithValue("@Email", mhs.Email);
+                cmd.Parameters.AddWithValue("@IPK", mhs.IPK);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new Exception(sqlEx.Message);
+                }
+                finally
+                {
+                    cmd.Dispose();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void Delete(string nim)
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string strSql = @"delete Mahasiswa where Nim=@Nim";
+
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@Nim", nim);
+
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new Exception(sqlEx.Message);
+                }
+                finally
+                {
+                    cmd.Dispose();
+                    conn.Close();
+                }
+            }
+        }
     }
 
 }

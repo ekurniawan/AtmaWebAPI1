@@ -49,8 +49,27 @@ namespace SampleWebAPI1.Controllers
         }
 
         // PUT: api/Mahasiswa/5
-        public void Put(int id, [FromBody]string value)
+        public IHttpActionResult Put(string id,Mahasiswa mhs)
         {
+            MahasiswaDAL mhsDAL = new MahasiswaDAL();
+            Mahasiswa result = mhsDAL.GetById(id);
+
+            try
+            {
+                if(result!=null)
+                {
+                    mhsDAL.Update(mhs);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("Data not found !");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE: api/Mahasiswa/5
