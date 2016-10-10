@@ -77,7 +77,7 @@ namespace SampleWebAPI1.Controllers
             }
         }
 
-        // DELETE api/values/5
+        // DELETE api/values/nim
         public void Delete(string id)
         {
             var result = lstMhs.Find(m => m.Nim == id);
