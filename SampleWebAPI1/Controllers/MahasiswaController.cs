@@ -26,6 +26,13 @@ namespace SampleWebAPI1.Controllers
             return mhsDAL.GetById(id);
         }
 
+        [Route("api/Mahasiswa/GetByName/{nama}")]
+        public IEnumerable<Mahasiswa> GetByName(string nama)
+        {
+            MahasiswaDAL mhsDAL = new MahasiswaDAL();
+            return mhsDAL.GetAllByName(nama);
+        }
+
         // POST: api/Mahasiswa
         public void Post([FromBody]string value)
         {

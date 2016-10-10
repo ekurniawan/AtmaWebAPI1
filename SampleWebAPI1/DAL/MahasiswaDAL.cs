@@ -49,6 +49,42 @@ namespace SampleWebAPI1.DAL
             return lstMhs;
         }
 
+
+        public IEnumerable<Mahasiswa> GetAllByName(string nama)
+        {
+            List<Mahasiswa> lstMhs = new List<Mahasiswa>();
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string strSql = @"select * from Mahasiswa 
+                                  where Nama like @Nama 
+                                  order by Nim";
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@Nama", "%" + nama + "%");
+                conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        lstMhs.Add(new Mahasiswa
+                        {
+                            Nim = dr["Nim"].ToString(),
+                            Nama = dr["Nama"].ToString(),
+                            Email = dr["Email"].ToString(),
+                            IPK = Convert.ToDouble(dr["IPK"])
+                        });
+                    }
+                }
+
+                dr.Close();
+                cmd.Dispose();
+                conn.Close();
+            }
+            return lstMhs;
+        }
+
         public Mahasiswa GetById(string nim)
         {
             Mahasiswa mhs = new Mahasiswa();
