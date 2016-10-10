@@ -34,8 +34,18 @@ namespace SampleWebAPI1.Controllers
         }
 
         // POST: api/Mahasiswa
-        public void Post([FromBody]string value)
+        public IHttpActionResult Post(Mahasiswa mahasiswa)
         {
+            MahasiswaDAL mhsDAL = new MahasiswaDAL();
+            try
+            {
+                mhsDAL.Insert(mahasiswa);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT: api/Mahasiswa/5

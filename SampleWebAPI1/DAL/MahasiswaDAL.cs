@@ -115,6 +115,37 @@ namespace SampleWebAPI1.DAL
             }
             return mhs;
         }
+
+
+        public void Insert(Mahasiswa mhs)
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string strSql = @"insert into Mahasiswa(Nim,Nama,Email,IPK) 
+                                  values(@Nim,@Nama,@Email,@IPK)";
+
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@Nim", mhs.Nim);
+                cmd.Parameters.AddWithValue("@Nama", mhs.Nama);
+                cmd.Parameters.AddWithValue("@Email", mhs.Email);
+                cmd.Parameters.AddWithValue("@IPK", mhs.IPK);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new Exception(sqlEx.Message);
+                }
+                finally
+                {
+                    cmd.Dispose();
+                    conn.Close();
+                }
+            }
+        }
     }
 
 }
