@@ -25,7 +25,7 @@ namespace SampleWebAPI1.DAL
             {
                 string strSql = @"select * from Mahasiswa order by Nim";
                 SqlCommand cmd = new SqlCommand(strSql, conn);
-
+                conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
 
                 if(dr.HasRows)
