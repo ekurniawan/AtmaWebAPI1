@@ -48,5 +48,11 @@ namespace SampleWebAPI1.DAL
             }
             return lstMhs;
         }
+
+        public Mahasiswa GetById(string nim)
+        {
+
+        }
     }
+
 }
