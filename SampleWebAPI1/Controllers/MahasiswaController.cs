@@ -73,8 +73,27 @@ namespace SampleWebAPI1.Controllers
         }
 
         // DELETE: api/Mahasiswa/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(string id)
         {
+            MahasiswaDAL mhsDAL = new MahasiswaDAL();
+            Mahasiswa result = mhsDAL.GetById(id);
+
+            try
+            {
+                if (result != null)
+                {
+                    mhsDAL.Delete(id);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("Data not found !");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
