@@ -20,9 +20,10 @@ namespace SampleWebAPI1.Controllers
         }
 
         // GET: api/Mahasiswa/5
-        public string Get(int id)
+        public Mahasiswa Get(string id)
         {
-            return "value";
+            MahasiswaDAL mhsDAL = new MahasiswaDAL();
+            return mhsDAL.GetById(id);
         }
 
         // POST: api/Mahasiswa

@@ -51,7 +51,33 @@ namespace SampleWebAPI1.DAL
 
         public Mahasiswa GetById(string nim)
         {
+            Mahasiswa mhs = new Mahasiswa();
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string strSql = @"select * from Mahasiswa 
+                                  where Nim=@Nim";
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@Nim", nim);
 
+                conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                if(dr.HasRows)
+                {
+                    while(dr.Read())
+                    {
+                        mhs.Nim = dr["Nim"].ToString();
+                        mhs.Nama = dr["Nama"].ToString();
+                        mhs.Email = dr["Email"].ToString();
+                        mhs.IPK = Convert.ToDouble(dr["IPK"]);
+                    }
+                }
+
+                dr.Close();
+                cmd.Dispose();
+                conn.Close();
+            }
+            return mhs;
         }
     }
 
