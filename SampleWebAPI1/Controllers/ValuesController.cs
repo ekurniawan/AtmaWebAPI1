@@ -75,6 +75,8 @@ namespace SampleWebAPI1.Controllers
             {
                 throw new Exception("Data not found !");
             }
+
+            
         }
 
         // DELETE api/values/nim
